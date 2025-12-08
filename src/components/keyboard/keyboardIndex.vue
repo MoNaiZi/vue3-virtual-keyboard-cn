@@ -90,11 +90,14 @@
               >{{ key }}</span
             >
           </template>
-          <keyDel v-if="mode != 'biaodian' && old_mode === ''"></keyDel>
+          <keyDel
+            @del="del"
+            v-if="mode != 'biaodian' && old_mode === ''"
+          ></keyDel>
         </div>
 
         <div class="del-box" v-if="mode === 'biaodian' || old_mode != ''">
-          <keyDel></keyDel>
+          <keyDel @del="del"></keyDel>
           <span class="key number" @[keyEvent]="cn_change('cn')">
             <template v-if="mainMode != 'noCn'">中/</template>英</span
           >
@@ -178,7 +181,7 @@
           @[keyEvent]="clickKey($event, key)"
           >{{ key }}</span
         >
-        <keyDel></keyDel>
+        <keyDel @del="del"></keyDel>
         <br />
         <span
           class="key key_hide"
@@ -239,7 +242,7 @@
           </div>
         </div>
         <div class="del-box">
-          <keyDel></keyDel>
+          <keyDel @del="del"></keyDel>
           <span
             class="key number blue"
             @[keyEvent]="Fanhui()"
@@ -283,7 +286,7 @@
 <script lang="jsx">
 import AllKey from "./key";
 // import Worker from "./index.worker.js";
-
+import { getCurrentInstance } from 'vue';
 let dict = {};
 let doubleSpell = {};
 let input = {};
@@ -358,6 +361,7 @@ export default {
   },
   components: {
     keyDel: {
+      inject: ['parent'],
       data() {
         return {
           interval: null,
@@ -372,7 +376,7 @@ export default {
             // e.currentTarget.classList.add(this.$parent.keyDownClass);
             this.interval = setInterval(() => {
               this.isIntervalDel = true;
-              this.$parent.del(e);
+              this.$emit("del", e);
             }, 100);
           }
         },
@@ -381,26 +385,26 @@ export default {
 
           this.interval = clearInterval(this.interval);
           if (!this.isIntervalDel) {
-            this.$parent.del(e);
+            this.$emit("del", e);
           }
           e.currentTarget.style.background = "#fff";
           this.isIntervalDel = false;
         },
       },
       render() {
-        let data = this.$parent.$data;
-        let def_mode = data.def_mode;
+        const parent = this.parent
+      
         let className = "key def-del";
         let sWidth = "50";
         let sHeight = "50";
         if (
-          !["cn", "en_cap", "en", "password"].includes(def_mode) ||
-          data.showDiction
+          !["cn", "en_cap", "en", "password"].includes(parent.def_mode) ||
+          parent.showDiction
         ) {
           className = "key number num-del";
           sWidth = "65";
           sHeight = "65";
-          if (data.showDiction) {
+          if (parent.showDiction) {
             sWidth = "75";
             sHeight = "75";
           }
@@ -452,6 +456,11 @@ export default {
       },
     },
   },
+  provide() {
+        return {
+          parent: this
+        };
+    },
   props: {
     manyDict: {
       type: String,
@@ -687,10 +696,11 @@ export default {
     setInputValue(key, type = "set") {
       let cursor = input.selectionStart;
       let tagName = input.tagName;
-
-      let isContenteditable = !!input.getAttribute("contenteditable");
+   
+      let isContenteditable = input.isContentEditable
       let value = input.value;
       if (isContenteditable) {
+
         cursor = this.getCaretPosition(input);
         value = input.innerText;
       }

@@ -1,11 +1,12 @@
 {
   "name": "vue3-virtual-keyboard-cn",
   "author": "MoNaiZi",
-  "version": "1.0.0",
-  "homepage": "https://github.com/MoNaiZi/vue-virtual-keyboard",
+  "version": "1.0.1",
+  "homepage": "https://github.com/MoNaiZi/vue3-virtual-keyboard-cn",
   "keywords": [
-    "vue",
+    "vue3",
     "js",
+    "vite",
     "keywords",
     "中文输入法",
     "虚拟键盘"

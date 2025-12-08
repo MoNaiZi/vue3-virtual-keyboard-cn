@@ -122,7 +122,7 @@ export default {
       console.log("tips", txt);
     },
     initFulfil() {
-      this.loading.close();
+      // this.loading.close();
     },
     clickDiv(e) {
       console.log("点击", e.target.getAttribute("contenteditable"));
@@ -174,12 +174,12 @@ export default {
       }
     }
 
-    this.loading = this.$loading({
-      lock: true,
-      text: "词库加载中。。",
-      spinner: "el-icon-loading",
-      background: "rgba(0, 0, 0, 0.7)",
-    });
+    // this.loading = this.$loading({
+    //   lock: true,
+    //   text: "词库加载中。。",
+    //   spinner: "el-icon-loading",
+    //   background: "rgba(0, 0, 0, 0.7)",
+    // });
     let elem = document.querySelector("#elem");
     let observer = new MutationObserver((mutationRecords) => {
       console.log(mutationRecords); // console.log(the changes)
@@ -197,7 +197,7 @@ export default {
   },
   data() {
     return {
-      // manyDict: "../../dict/chowder.json",
+      manyDict: "../../dict/chowder.json",
       singleDict: "../../dict/baseDict.json",
       currentInput: "",
       showKeyboard: false,
