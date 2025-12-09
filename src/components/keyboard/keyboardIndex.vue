@@ -39,7 +39,7 @@
             </p>
           </div>
           <div class="page" v-else>
-            <p class="next" @[keyEvent]="isShowDiction">
+            <p class="next" @[keyEvent].stop="isShowDiction">
               <fullTriangle></fullTriangle>
             </p>
           </div>
@@ -655,6 +655,7 @@ export default {
     },
     isShowDiction(e) {
       e.preventDefault();
+      e.stopImmediatePropagation();
       this.showDiction = true;
     },
     showNumberKey(key) {
@@ -785,6 +786,10 @@ export default {
       this.show = true;
       this.mode = e.target.dataset.mode || "cn";
       this.old_mode = "";
+      if (e.target.dataset.defmode) {
+        this.old_mode = this.mode;
+        this.mode = e.target.dataset.defmode;
+      }
     },
     HideKey() {
       this.show = false;

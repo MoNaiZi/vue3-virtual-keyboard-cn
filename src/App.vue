@@ -42,7 +42,12 @@
         />
       </div>
       <div>
-        英文大写：<input type="text" data-mode="en_cap" keyboard="true" />
+        英文大写：<input
+          type="text"
+          data-mode="en_cap"
+          data-defmode="num"
+          keyboard="true"
+        />
       </div>
       <div>英文小写：<input type="text" data-mode="en" keyboard="true" /></div>
       <div>数字：<input type="text" data-mode="num" keyboard="true" /></div>
@@ -104,7 +109,7 @@
         :singleDict="singleDict"
         @keyboardTips="keyboardTips"
         @clickNumber="clickNumber"
-        :blurHide="true"
+        :blurHide="false"
       ></keyboard>
     </div>
   </div>
