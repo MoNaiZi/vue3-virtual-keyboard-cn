@@ -83,8 +83,8 @@ data-mode 默认不传是是中文，不传词库默认就是小写英文
 
 ### 引用词库示例
 
-比如我有个词库在 src/dict 目录下：
-`正确的引用<keyboard :singleDict="'../../dict/baseDict.json"'"></keyboard> `
+词库要放在 public/dict 目录下：
+`正确的引用<keyboard :singleDict="'/dict/baseDict.json'"></keyboard> `
 
 !!! 注意不要把多词汇词库传递给单词汇词库的属性
 <br/>

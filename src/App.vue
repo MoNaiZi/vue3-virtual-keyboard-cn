@@ -197,8 +197,8 @@ export default {
   },
   data() {
     return {
-      manyDict: "../../dict/chowder.json",
-      singleDict: "../../dict/baseDict.json",
+      manyDict: "/dict/chowder.json",
+      singleDict: "/dict/baseDict.json",
       currentInput: "",
       showKeyboard: false,
       value: "",

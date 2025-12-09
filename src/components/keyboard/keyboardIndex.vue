@@ -320,21 +320,20 @@ export default {
     // };
     let promiseList = [];
     if (this.singleDict) {
-      const promise = import(`${this.singleDict}`).then((res) => {
-        dict = res;
-        // Object.freeze(dict);
-        // this.worker.postMessage({
-        //   method: "init",
-        //   data: dict,
-        //   dataKey: "dict",
-        // });
+    const promise = fetch(this.singleDict)
+      .then(res => res.json())
+      .then(data => {
+        dict = data;
       });
 
-      promiseList.push(promise);
+    promiseList.push(promise);
     }
+
     if (this.manyDict) {
-      const promise = import(`${this.manyDict}`).then((res) => {
-        doubleSpell = res;
+    const promise = fetch(this.manyDict)
+      .then(res => res.json())
+      .then(data => {
+        doubleSpell = data;
         // Object.freeze(doubleSpell);
         // this.worker.postMessage({
         //   method: "init",
@@ -342,17 +341,19 @@ export default {
         //   dataKey: "doubleSpell",
         // });
       });
-      promiseList.push(promise);
+
+    promiseList.push(promise);
     }
 
     Promise.all(promiseList)
-      .then(() => {
-        this.$emit("initResult", "success");
-      })
-      .catch((err) => {
-        console.error("词库错误", err);
-        this.$emit("initResult", "fail");
-      });
+    .then(() => {
+      this.$emit("initResult", "success");
+    })
+    .catch((err) => {
+      console.error("词库错误", err);
+      this.$emit("initResult", "fail");
+    });
+
   },
   mounted() {
     this.$nextTick(() => {
