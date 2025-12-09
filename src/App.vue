@@ -71,15 +71,11 @@
         ></textarea>
       </div>
       <div>
-        <p
-          contenteditable
-          id="elem"
-          @click="clickDiv"
-          @blur="blurInput2"
-          data-key="11"
-        >
+        <p contenteditable id="elem" data-key="11" keyboard="true">
           div手动显示输入法： 我是可以被编辑的div
         </p>
+
+        <p contenteditable data-key="11" data-mode="num" keyboard="true">222</p>
       </div>
       <div>不需要输入法<input type="text" /></div>
       <div style="height: 400px"></div>

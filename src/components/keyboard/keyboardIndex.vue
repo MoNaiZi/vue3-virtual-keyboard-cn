@@ -780,8 +780,8 @@ export default {
     },
     showKeyBoardFn(e) {
       this.mainMode = "";
-      const showKeyboard = this.showKeyboard;
-      if (showKeyboard) return;
+      // const showKeyboard = this.showKeyboard;
+      // if (showKeyboard) return;
       input = e.target;
       this.show = true;
       this.mode = e.target.dataset.mode || "cn";
@@ -1474,7 +1474,7 @@ i {
         // height: 100%;
         flex-wrap: wrap;
         .item {
-          height: 20px;
+          //height: 20px;
           padding: 10px;
           border-bottom: 1px solid;
           font-size: 19px;
