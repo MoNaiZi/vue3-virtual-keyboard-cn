@@ -286,7 +286,7 @@
 <script lang="jsx">
 import AllKey from "./key";
 // import Worker from "./index.worker.js";
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance } from "vue";
 let dict = {};
 let doubleSpell = {};
 let input = {};
@@ -320,40 +320,39 @@ export default {
     // };
     let promiseList = [];
     if (this.singleDict) {
-    const promise = fetch(this.singleDict)
-      .then(res => res.json())
-      .then(data => {
-        dict = data;
-      });
+      const promise = fetch(this.singleDict)
+        .then((res) => res.json())
+        .then((data) => {
+          dict = data;
+        });
 
-    promiseList.push(promise);
+      promiseList.push(promise);
     }
 
     if (this.manyDict) {
-    const promise = fetch(this.manyDict)
-      .then(res => res.json())
-      .then(data => {
-        doubleSpell = data;
-        // Object.freeze(doubleSpell);
-        // this.worker.postMessage({
-        //   method: "init",
-        //   data: doubleSpell,
-        //   dataKey: "doubleSpell",
-        // });
-      });
+      const promise = fetch(this.manyDict)
+        .then((res) => res.json())
+        .then((data) => {
+          doubleSpell = data;
+          // Object.freeze(doubleSpell);
+          // this.worker.postMessage({
+          //   method: "init",
+          //   data: doubleSpell,
+          //   dataKey: "doubleSpell",
+          // });
+        });
 
-    promiseList.push(promise);
+      promiseList.push(promise);
     }
 
     Promise.all(promiseList)
-    .then(() => {
-      this.$emit("initResult", "success");
-    })
-    .catch((err) => {
-      console.error("词库错误", err);
-      this.$emit("initResult", "fail");
-    });
-
+      .then(() => {
+        this.$emit("initResult", "success");
+      })
+      .catch((err) => {
+        console.error("词库错误", err);
+        this.$emit("initResult", "fail");
+      });
   },
   mounted() {
     this.$nextTick(() => {
@@ -362,7 +361,7 @@ export default {
   },
   components: {
     keyDel: {
-      inject: ['parent'],
+      inject: ["parent"],
       data() {
         return {
           interval: null,
@@ -393,8 +392,8 @@ export default {
         },
       },
       render() {
-        const parent = this.parent
-      
+        const parent = this.parent;
+
         let className = "key def-del";
         let sWidth = "50";
         let sHeight = "50";
@@ -458,10 +457,10 @@ export default {
     },
   },
   provide() {
-        return {
-          parent: this
-        };
-    },
+    return {
+      parent: this,
+    };
+  },
   props: {
     manyDict: {
       type: String,
@@ -697,11 +696,10 @@ export default {
     setInputValue(key, type = "set") {
       let cursor = input.selectionStart;
       let tagName = input.tagName;
-   
-      let isContenteditable = input.isContentEditable
+
+      let isContenteditable = input.isContentEditable;
       let value = input.value;
       if (isContenteditable) {
-
         cursor = this.getCaretPosition(input);
         value = input.innerText;
       }
@@ -735,11 +733,17 @@ export default {
         input.innerText = value;
         let range = document.createRange();
         let sel = window.getSelection();
-        range.setStart(input.childNodes[0], cursor);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-        this.$emit("contenteditableInput", input.innerText);
+        if (input.childNodes.length) {
+          range.setStart(input.childNodes[0], cursor);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+
+        this.$emit("contenteditableInput", {
+          value: input.innerText,
+          data: input.dataset,
+        });
       } else {
         input.value = value;
         input.selectionStart = cursor;

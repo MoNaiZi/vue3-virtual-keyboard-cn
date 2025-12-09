@@ -66,7 +66,13 @@
         ></textarea>
       </div>
       <div>
-        <p contenteditable id="elem" @click="clickDiv" @blur="blurInput2">
+        <p
+          contenteditable
+          id="elem"
+          @click="clickDiv"
+          @blur="blurInput2"
+          data-key="11"
+        >
           div手动显示输入法： 我是可以被编辑的div
         </p>
       </div>
@@ -98,14 +104,13 @@
         :singleDict="singleDict"
         @keyboardTips="keyboardTips"
         @clickNumber="clickNumber"
-        :blurHide="false"
+        :blurHide="true"
       ></keyboard>
     </div>
   </div>
 </template>
 
-<script>
-</script>
+<script></script>
 <script>
 import keyboard from "./components/keyboard/keyboardIndex.vue";
 // import keyboard from "vue-virtual-keyboard-cn/keyboardIndex.vue";
@@ -230,7 +235,7 @@ export default {
 };
 </script>
 
-<style >
+<style>
 .keyDown {
   background: #2c3e50;
 }
