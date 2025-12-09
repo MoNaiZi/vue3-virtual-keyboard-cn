@@ -115,13 +115,13 @@ data-mode 默认不传是是中文，不传词库默认就是小写英文
 
 ### 组件事件
 
-| 事件                 | 说明                       | 值           | 备注                                                                                        |
-| -------------------- | -------------------------- | ------------ | ------------------------------------------------------------------------------------------- |
-| clickNumber          | 点击数字符号触发           | key          |
-| clickKey             | 点击字母空格触发           | key          |
-| del                  | 点击删除触发               | key          | 如果是中文，会返回当前的拼音                                                                |
-| changeMode           | 键盘类型改变时触发         | data-mode    |
-| changeShow           | 键盘显示和隐藏触发         | true/false   |
-| initResult           | 词库加载事件               | success/fail | 成功和错误都会返回对应的结果                                                                |
-| inputBindKeyboard    | 重新给 input 绑定键盘      |              | 使用：调用组件里面的 inputBindKeyboard 方法，例子：this.$refs.keyboard.inputBindKeyboard(); |
-| contenteditableInput | 更改可编辑元素是触发的事件 | value        |
+| 事件                 | 说明                       | 值                                 | 备注                                                                                        |
+| -------------------- | -------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------- |
+| clickNumber          | 点击数字符号触发           | key                                |
+| clickKey             | 点击字母空格触发           | key                                |
+| del                  | 点击删除触发               | key                                | 如果是中文，会返回当前的拼音                                                                |
+| changeMode           | 键盘类型改变时触发         | data-mode                          |
+| changeShow           | 键盘显示和隐藏触发         | true/false                         |
+| initResult           | 词库加载事件               | success/fail                       | 成功和错误都会返回对应的结果                                                                |
+| inputBindKeyboard    | 重新给 input 绑定键盘      |                                    | 使用：调用组件里面的 inputBindKeyboard 方法，例子：this.$refs.keyboard.inputBindKeyboard(); |
+| contenteditableInput | 更改可编辑元素是触发的事件 | {value:'值',data:dom 上的 data-\*} |
