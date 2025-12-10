@@ -1149,6 +1149,9 @@ export default {
     Fanhui() {
       if (this.showDiction) {
         this.showDiction = false;
+        if (input) {
+          input.focus();
+        }
         return;
       }
 

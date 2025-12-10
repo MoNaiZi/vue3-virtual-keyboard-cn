@@ -24,7 +24,7 @@ vite 支持到 v6
 Vue3 默认不支持 JSX，必须安装：
 
 ```bash
-npm install @vitejs/plugin-vue-jsx -D
+npm install @vitejs/plugin-vue-jsx
 ```
 
 然后 vite.config.js 中启用：
