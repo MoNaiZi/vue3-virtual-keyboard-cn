@@ -1,35 +1,9 @@
 <template>
   <div id="app">
-    <el-input
-      v-model="value2"
-      placeholder="请输入或选择"
-      keyboard="true"
-      data-mode="cn"
-      @focus="focusInput"
-    ></el-input>
-    <el-select
-      v-model="value2"
-      ref="select"
-      placeholder="请选择"
-      class="abcSelect"
-    >
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
-    <el-select v-model="value2" ref="select" placeholder="请选择2">
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
+    <div @click="openkeyboard">
+      自定义输入：
+      <div>你好你好</div>
+    </div>
     <div>
       <div>
         中文：<input
@@ -79,20 +53,7 @@
       </div>
       <div>不需要输入法<input type="text" /></div>
       <div style="height: 400px"></div>
-      <!-- <vue-virtual-keyboard-cn
-        :transitionTime="'0.3s'"
-        :maxQuantify="10"
-        :showKeyboard="showKeyboard"
-        @clickKey="clickKey"
-        float
-        :inputEvent="currentInput"
-        @initResult="initFulfil"
-        :manyDict="manyDict"
-        :singleDict="singleDict"
-        @keyboardTips="keyboardTips"
-        @clickNumber="clickNumber"
-        :blurHide="false"
-      ></vue-virtual-keyboard-cn> -->
+
       <keyboard
         :transitionTime="'0.5s'"
         :maxQuantify="10"
@@ -105,7 +66,10 @@
         :singleDict="singleDict"
         @keyboardTips="keyboardTips"
         @clickNumber="clickNumber"
+        @del="del"
         :blurHide="false"
+        :setMode="setMode"
+        @changeShow="changeShow"
       ></keyboard>
     </div>
   </div>
@@ -121,6 +85,17 @@ export default {
     keyboard,
   },
   methods: {
+    changeShow(bool) {
+      this.showKeyboard = bool;
+    },
+    openkeyboard() {
+      this.showKeyboard = true;
+      this.setMode = "cn";
+      // this.setMode = "num";
+    },
+    del(e) {
+      console.log("del", e);
+    },
     clickNumber(key) {
       console.log("clickNumber", key);
     },
@@ -203,6 +178,7 @@ export default {
   },
   data() {
     return {
+      setMode: "",
       manyDict: "/dict/chowder.json",
       singleDict: "/dict/baseDict.json",
       currentInput: "",

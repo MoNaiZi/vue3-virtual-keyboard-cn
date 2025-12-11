@@ -480,6 +480,7 @@ export default {
     keyUpClass: { type: String, default: "keyUp" },
     keyDownClass: { type: String, default: "keyDown" },
     inputEvent: null,
+    setMode: { type: String, default: "en" },
   },
   data() {
     return {
@@ -498,6 +499,14 @@ export default {
     };
   },
   watch: {
+    setMode: function (mode) {
+      this.mode = mode;
+      this.old_mode = "";
+      // this.def_mode = "";
+    },
+    showKeyboard: function (bool) {
+      this.show = bool;
+    },
     inputEvent: function (val) {
       const showKeyboard = this.showKeyboard;
       let show = false;
@@ -695,6 +704,14 @@ export default {
       });
     },
     setInputValue(key, type = "set") {
+      if (input !== document.activeElement) {
+        console.log("setValue", key, type);
+        this.$emit("setValue", {
+          value: key,
+          type,
+        });
+        return;
+      }
       let cursor = input.selectionStart;
       let tagName = input.tagName;
 
@@ -793,7 +810,10 @@ export default {
     },
     HideKey() {
       this.show = false;
-      input.blur();
+
+      if (input && input.blur) {
+        input.blur();
+      }
     },
     mousedown(e) {
       // console.log(input);
@@ -804,8 +824,11 @@ export default {
       e.preventDefault();
       e.stopImmediatePropagation();
       e.target.style.background = "#d0d0d0";
-      if (input !== document.activeElement) return;
-
+      if (input !== document.activeElement) {
+        setTimeout(() => {
+          e.target.style.background = "#fff";
+        }, 300);
+      }
       if (this.mode === "cn" && !pass) {
         this.cn_input += key;
         const specialPinYin = ["u", "v", "i"].includes(
@@ -816,7 +839,7 @@ export default {
             this.cn_list_str = [key];
           } else {
             const value = this.cn_list_str[0] + key;
-            this.$set(this.cn_list_str, 0, value);
+            this.cn_list_str[0] = value;
           }
 
           return;
@@ -854,9 +877,14 @@ export default {
         return;
       }
 
-      if (input !== document.activeElement) return;
       e.preventDefault();
       e.target.style.background = "#d0d0d0";
+      if (input !== document.activeElement) {
+        setTimeout(() => {
+          e.target.style.background = "#fff";
+        }, 300);
+      }
+
       if (this.mode === "cn" && this.cn_input !== "") {
         let value = this.cut_cn_list[parseInt(key) - 1];
         if (!value) return;
@@ -1066,7 +1094,11 @@ export default {
     del(e) {
       e.stopImmediatePropagation();
       e.preventDefault();
-      if (input !== document.activeElement) return;
+      if (input !== document.activeElement) {
+        setTimeout(() => {
+          e.target.style.background = "#fff";
+        }, 300);
+      }
       const showDiction = this.showDiction;
       if (this.mode === "cn" && this.cn_input !== "" && !showDiction) {
         this.cn_input = this.delStringLast(this.cn_input, this.cn_input.length);
